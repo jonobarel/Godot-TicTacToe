@@ -8,15 +8,26 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Sprite",
+"class": "BoardPosition",
+"language": "GDScript",
+"path": "res://Scripts/BoardPosition.gd"
+}, {
+"base": "Node",
+"class": "GameBoard",
+"language": "GDScript",
+"path": "res://Scripts/GameBoard.gd"
+} ]
 _global_script_class_icons={
-
+"BoardPosition": "",
+"GameBoard": ""
 }
 
 [application]
 
 config/name="NaughtsCrosses"
-run/main_scene="res://GameManager.tscn"
+run/main_scene="res://Scenes/GameManager.tscn"
 config/icon="res://icon.png"
 
 [rendering]

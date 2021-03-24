@@ -1,0 +1,60 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/Position.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/GameBoard.gd" type="Script" id=2]
+
+[node name="GameBoard" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Pos0" parent="." instance=ExtResource( 1 )]
+position = Vector2( 368, 216 )
+
+[node name="Pos1" parent="." instance=ExtResource( 1 )]
+position = Vector2( 456, 216 )
+
+[node name="Pos2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 536, 216 )
+
+[node name="Pos3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 368, 298.314 )
+
+[node name="Pos4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 456, 298.314 )
+
+[node name="Pos5" parent="." instance=ExtResource( 1 )]
+position = Vector2( 536, 298.314 )
+
+[node name="Pos6" parent="." instance=ExtResource( 1 )]
+position = Vector2( 368, 377.558 )
+
+[node name="Pos7" parent="." instance=ExtResource( 1 )]
+position = Vector2( 456, 377.558 )
+
+[node name="Pos8" parent="." instance=ExtResource( 1 )]
+position = Vector2( 533.687, 377.558 )
+
+[node name="Line2D" type="Line2D" parent="."]
+position = Vector2( 376, 216 )
+scale = Vector2( 0.926701, 1.26616 )
+points = PoolVector2Array( 51.7967, -37.9099, 51.7967, 164.276 )
+width = 2.0
+
+[node name="Line2D2" type="Line2D" parent="."]
+position = Vector2( 456, 216 )
+scale = Vector2( 0.926701, 1.26616 )
+points = PoolVector2Array( 51.7967, -37.9099, 51.7967, 164.276 )
+width = 2.0
+
+[node name="Line2D3" type="Line2D" parent="."]
+position = Vector2( 520, 208 )
+rotation = 1.5708
+scale = Vector2( 0.926701, 1.26616 )
+points = PoolVector2Array( 51.7966, -33.4184, 51.7967, 132.685 )
+width = 2.0
+
+[node name="Line2D4" type="Line2D" parent="."]
+position = Vector2( 528, 296 )
+rotation = 1.5708
+scale = Vector2( 0.926701, 1.26616 )
+points = PoolVector2Array( 51.7966, -33.4184, 51.7967, 132.685 )
+width = 2.0
