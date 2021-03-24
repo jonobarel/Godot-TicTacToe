@@ -6,6 +6,7 @@ class_name GameBoard
 # var a = 2
 # var b = "text"
 var grid = []
+var game_over = false
 
 func _init():
 	board_init()
@@ -26,6 +27,9 @@ func play(pos: int, p: String):
 	if pos in range(9) and grid[pos] == "_":
 		grid[pos] = p
 		getPosition(pos).show_move(p)
+		if get_available_moves().size() == 0 or get_winner() != "":
+			game_over = true
+			
 
 func board_init():
 	print("Board initiatlised")
