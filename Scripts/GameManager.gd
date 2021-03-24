@@ -28,12 +28,15 @@ func _input(event):
 
 
 func _process(delta):
-	if game_over:
-		if board.get_winner() in ["x", "o"]:
-			print ("game over! Winner is %s !" % board.get_winner())
+	if board.game_over:
+		var textbox = $"../UI/GameResult"
+		var winner = board.get_winner()
+		if winner in ["x", "o"]:
+			textbox.set_bbcode("[center]The winner is %s![/center]" % winner.to_upper())
 		else:
-			print("Game was a tie!")
-		print(board.show_board())
+			textbox.set_bbcode("[center]It's a tie![/center]")
+		textbox.visible = true
+		
 	elif not human_player_turn:
 		var pos = get_ai_move(board)
 		board.play(pos, "o")
