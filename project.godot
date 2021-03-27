@@ -9,10 +9,20 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "OptionButton",
+"class": "AISelector",
+"language": "GDScript",
+"path": "res://UI/AISelector.gd"
+}, {
 "base": "Sprite",
 "class": "BoardPosition",
 "language": "GDScript",
 "path": "res://Scripts/BoardPosition.gd"
+}, {
+"base": "RichTextLabel",
+"class": "BotChat",
+"language": "GDScript",
+"path": "res://UI/BotChat.gd"
 }, {
 "base": "Node",
 "class": "GameBoard",
@@ -20,17 +30,26 @@ _global_script_classes=[ {
 "path": "res://Scripts/GameBoard.gd"
 } ]
 _global_script_class_icons={
+"AISelector": "",
 "BoardPosition": "",
+"BotChat": "",
 "GameBoard": ""
 }
 
 [application]
 
 config/name="NaughtsCrosses"
-run/main_scene="res://Scenes/GameManager.tscn"
+run/main_scene="res://Scenes/Main.tscn"
+run/disable_stdout=true
+run/disable_stderr=true
 config/icon="res://icon.png"
+
+[display]
+
+window/size/width=800
 
 [rendering]
 
 quality/driver/driver_name="GLES2"
+vram_compression/import_etc=true
 environment/default_environment="res://default_env.tres"
