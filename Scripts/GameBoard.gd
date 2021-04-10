@@ -7,7 +7,9 @@ class_name GameBoard
 # var b = "text"
 var grid = []
 var game_over = false
-var winning_moves = [
+var is_virtual : bool = false
+
+const WINNING_MOVES = [
 	[0,1,2],
 	[0,3,6],
 	[0,4,8],
@@ -18,22 +20,27 @@ var winning_moves = [
 	[2,4,6]
 ]
 
-func _init(new_grid : Array = []):
-	if new_grid.empty():
+#func _init(new_grid : Array = []):
+#	if new_grid.empty():
+#		board_init()
+#	else:
+#		grid = new_grid.duplicate()
+#		grid = get_available_moves().empty() or get_winner() != ""
+
+func _init(other : GameBoard = null):
+	if other == null:
 		board_init()
 	else:
-		grid = new_grid.duplicate()
-
-
-
-func _ready():
-	pass
+		grid = other.grid.duplicate()
+		game_over = other.game_over
+		is_virtual = true
 	
 
 func board_clear():
 	for i in range(9):
 		grid[i] = "_"
-		getPosition(i).hide()
+		if not is_virtual:
+			getPosition(i).hide() 
 
 func getPosition(i : int) -> Node:
 	return get_node("Pos%s" % i)
@@ -41,7 +48,8 @@ func getPosition(i : int) -> Node:
 func play(pos: int, p: String):
 	if pos in range(9) and grid[pos] == "_":
 		grid[pos] = p
-		getPosition(pos).show_move(p)
+		if not is_virtual:
+			getPosition(pos).show_move(p) 
 		if get_available_moves().size() == 0 or get_winner() != "":
 			game_over = true
 			
@@ -93,8 +101,9 @@ func _get_winner(g: Array) -> String:
 	
 	return "" #empty string means no winner - check for ties by no-winner and no more available moves
 
+#does this move win the game?
 func test_winning_move(i : int, p : String)-> bool:
-	for m in winning_moves:
+	for m in WINNING_MOVES:
 		if i in m:
 			var m_copy = m.duplicate()
 			m_copy.erase(i)

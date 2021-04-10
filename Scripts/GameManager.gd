@@ -30,7 +30,6 @@ func _input(event):
 			else:
 				print("trying to choose occcupied spot %s" % pos)
 
-
 func _process(delta):
 	if board.game_over:
 		
@@ -56,9 +55,10 @@ func get_ai_move() -> int:
 			return get_hack_move()
 		"heuristic":
 			return get_heuristic_move()
+		"minimax":
+			return get_minimax_move()
 			
 	return -1
-
 
 func get_hack_move():
 	# option one: find a winning move
@@ -119,23 +119,84 @@ func get_heuristic_move():
 	
 	return get_random_move()
 	
-func minimax(game_state : Array, depth : int, maximizingPlayer : String):
-	var board = GameBoard.new(game_state)
-	if depth == 0:
-		if board.get_winner() == maximizingPlayer
-	 
+func get_minimax_move():
+	var value = -9999
+	var chosen_move = null
+	chat.chat_message("Going to test the following moves: %s" % String(board.get_available_moves()))
+#	for i in board.get_available_moves():
+#		var test_board = GameBoard.new(board)
+#		test_board.play(i, "o")
+#		var v = minimax(test_board, 0, false, "o", "x")
+#		chat.chat_message("The value of playing %s is %s" % [i, v])
+#		if v > value:
+#			value = v
+#			chosen_move = i
+	var test_board = GameBoard.new(board)
 	
-
+	var best = minimax(test_board, 9, true, "o", "x")
+	chat.chat_message("All things considered, my best move is %s with value %s" % [best[0], best[1]])
+	return best[0]
+	
+func minimax(game_state : GameBoard, depth: int, maximizing_player : bool, target_player : String, opposing_player : String):
+	var winner = game_state.get_winner()
+	# print("%s %s" % [_multi_string(" ", 10-depth), game_state.grid])
+	
 #function minimax(node, depth, maximizingPlayer) is
 #    if depth = 0 or node is a terminal node then
 #        return the heuristic value of node
+
+	if depth == 0 or game_state.game_over:
+		match winner:
+			target_player:
+				return [-1,10]
+			"": #tie
+				return [-1,0]
+			opposing_player:  #Opponent
+				return [-1,-10]
+		
+	
+	
 #    if maximizingPlayer then
 #        value := −∞
 #        for each child of node do
 #            value := max(value, minimax(child, depth − 1, FALSE))
 #        return value
+	var moves = game_state.get_available_moves()
+	var value = -999
+	var best = [-1, value]
+	if maximizing_player:
+		for i in moves:
+			var new_state : GameBoard = GameBoard.new(game_state)
+			new_state.play(i, target_player)
+			var score = minimax(new_state, depth-1, false, target_player, opposing_player)
+			if score[1] > best[1]:
+				best = [i,score[1]]
+		return best
+
 #    else (* minimizing player *)
 #        value := +∞
 #        for each child of node do
 #            value := min(value, minimax(child, depth − 1, TRUE))
 #        return value
+
+
+	else: # minimizing player	
+		value = 999
+		best = [-1, value]
+		for i in moves:
+			var new_state = GameBoard.new(game_state)
+			new_state.play(i,opposing_player)
+			var score = minimax(new_state, depth-1,  true, target_player, opposing_player)
+			if score[1] < best[1]:
+				best = [i,score[1]]
+		return best
+
+
+
+
+
+func _multi_string(s : String, rep : int):
+	var ret = ""
+	for _i in range(rep):
+		ret+=s
+	return ret
